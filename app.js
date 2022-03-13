@@ -6,7 +6,8 @@ const passport = require('passport');
 const session = require('express-session');
 const mongoose = require('mongoose');
 require('./passport')(passport);
-require('./db');
+const db = require('./db');
+db();
 
 const app = express();
 
