@@ -1,0 +1,24 @@
+<main class="form-signin text-center">
+  <form action="/register" method='POST'>
+    <img class="mb-4" src="./icct-logo.jpg" alt="" width="100">
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="w-100 btn btn-primary mb-2" type="submit">Sign up</button>
+    <a href="/login" class="w-100 btn btn-secondary">Login</a>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+  </form>
+</main>
