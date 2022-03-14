@@ -12,9 +12,9 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
   // console.log(req.body)
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      res.json({ msg: 'Username or password is required'})
+    const { username, password, firstName, lastName } = req.body;
+    if (!username || !password || !firstName || !lastName) {
+      res.status(400).json({ msg: 'Username, Password, Firstname, Lastname is required'})
     } else {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -22,8 +22,10 @@ router.post('/register', async (req, res) => {
       console.log(hashedPassword)
       const user = await User.create({
         username,
-        password: hashedPassword
+        password: hashedPassword,
         // password
+        firstName,
+        lastName
       });
       console.log(`User: ${user}`)
       // res.json(user)
@@ -44,7 +46,7 @@ router.post('/', passport.authenticate('local', {
 }));
 
 router.get('/dashboard', checkAuthenticated, (req, res) => {
-  // console.log(req.user)
+  console.log(req.user)
   res.render('dashboard', {
     layout: false,
     user: req.user

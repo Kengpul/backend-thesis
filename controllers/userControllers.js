@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
 // GET /api/users
 const getUsers = async (req, res) => {
@@ -36,12 +37,20 @@ const getUser = async (req, res, next) => {
 // PUT /api/users/:id
 const updUser = async (req, res) => {
   // console.log(req.body)
-  const { firstName, lastName, idNum, section } = req.body;
+  // const { firstName, lastName, idNum, section } = req.body;
+  const { username, password, firstName, lastName, isBasic, isStudent, isTeacher, isAdmin } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  // console.log(hashedPassword)
   const user = await User.findByIdAndUpdate({ _id: req.params.id }, {
+    username,
+    password: hashedPassword,
     firstName,
     lastName,
-    idNum,
-    section
+    isBasic,
+    isStudent,
+    isTeacher,
+    isAdmin
   })
   res.status(201).json(user);
 }

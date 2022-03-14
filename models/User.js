@@ -9,32 +9,32 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [ true, 'Password is required']
   },
-  // firstName: {
-  //   type: String,
-  //   required: true
-  // },
-  // lastName: {
-  //   type: String,
-  //   required: true
-  // },
+  firstName: {
+    type: String,
+    required: [ true, 'Firstname is required']
+  },
+  lastName: {
+    type: String,
+    required: [ true, 'Lastname is required']
+  },
   // idNum: String,
   // section: String,
-  // isBasic: {
-  //   type: Boolean,
-  //   default: true
-  // },
-  // isStudent: {
-  //   type: Boolean,
-  //   default: false
-  // },
-  // isTeacher: {
-  //   type: Boolean,
-  //   default: false
-  // },
-  // isAdmin: {
-  //   type: Boolean,
-  //   default: false
-  // }
+  isBasic: {
+    type: Boolean,
+    default: true
+  },
+  isStudent: {
+    type: Boolean,
+    default: false
+  },
+  isTeacher: {
+    type: Boolean,
+    default: false
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('User', userSchema);
