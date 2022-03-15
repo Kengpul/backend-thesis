@@ -1,40 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const { checkAuthenticated } = require('../middleware');
-
-router.get('/register', (req, res) => {
-  res.render('register');
-});
-
-router.post('/register', async (req, res) => {
-  // console.log(req.body)
-  try {
-    const { username, password, firstName, lastName } = req.body;
-    if (!username || !password || !firstName || !lastName) {
-      res.status(400).json({ msg: 'Username, Password, Firstname, Lastname is required'})
-    } else {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      console.log(salt);
-      console.log(hashedPassword)
-      const user = await User.create({
-        username,
-        password: hashedPassword,
-        // password
-        firstName,
-        lastName
-      });
-      console.log(`User: ${user}`)
-      // res.json(user)
-      res.redirect('/');
-    }
-  } catch (err) {
-    res.json(err)
-  }
-});
+const bcrypt = require('bcryptjs');
 
 router.get('/', (req, res) => {
   res.render('login');
@@ -45,17 +13,46 @@ router.post('/', passport.authenticate('local', {
   failureRedirect: '/'
 }));
 
-router.get('/dashboard', checkAuthenticated, (req, res) => {
-  console.log(req.user)
-  res.render('dashboard', {
-    layout: false,
-    user: req.user
-  });
+// router.post('/', async (req, res) => {
+//   const { username, password } = req.body;
+//   // console.log(typeof req.body.password);
+//   const user = await User.findOne({ username})
+//   console.log(user)
+//   // console.log(typeof user.password)
+//   // res.json(user)
+//   if (user && user.password === password) {
+//     // console.log('no user found')
+//     res.redirect('/dashboard');
+//   } else {
+//     // console.log('found')
+//     res.redirect('/');
+//   }
+// })
+
+router.get('/register', (req, res) => {
+  res.render('register');
 });
 
-router.post('/logout', (req, res) => {
-  req.logout();
+router.post('/register', async (req, res) => {
+  // console.log(req.body);
+  const { username, password, firstname } = req.body;
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const user = await User.create({
+    username,
+    password: hashedPassword,
+    firstname
+  });
+  // res.status(201).json(user);
   res.redirect('/');
+});
+
+router.get('/dashboard', (req, res) => {
+  console.log(req.isAuthenticated())
+  console.log(req.user)
+  res.render('dashboard');
 })
 
 module.exports = router;

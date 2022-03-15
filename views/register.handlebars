@@ -1,24 +1,21 @@
-<main class="form-signin text-center">
-  <form action="/register" method='POST'>
-    <img class="mb-4" src="./icct-logo.jpg" alt="" width="100">
-    <h1 class="h3 mb-3 fw-normal">Register</h1>
-
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username" required>
-      <label for="floatingInput">Username</label>
+<div class="container">
+  <h2>Register Page</h2>
+  <form action="/register" method="post">
+    <div class="mb-2">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" name="username">
     </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" required>
-      <label for="floatingPassword">Password</label>
+    <div class="mb-2">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" name="password">
     </div>
-
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
+    <div class="mb-2">
+      <label for="firstname" class="form-label">First Name</label>
+      <input type="text" class="form-control" name="firstname">
     </div>
-    <button class="w-100 btn btn-primary mb-2" type="submit">Sign up</button>
-    <a href="/" class="w-100 btn btn-secondary">Login</a>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+    <div class="d-grid">
+      <input type="submit" class="btn btn-danger" value="Register">
+      <a href="/" class="btn btn-secondary">Login</a>
+    </div>
   </form>
-</main>
+</div>
