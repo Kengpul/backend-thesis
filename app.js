@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { engine } = require('express-handlebars');
 const passport = require('passport');
 const session = require('express-session');
@@ -8,10 +9,12 @@ db();
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(session({
   secret: "secret",

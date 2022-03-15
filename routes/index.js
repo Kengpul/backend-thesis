@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const { checkAuthenticated } = require('../middleware');
 
 router.get('/', (req, res) => {
   res.render('login');
@@ -49,10 +50,23 @@ router.post('/register', async (req, res) => {
   res.redirect('/');
 });
 
-router.get('/dashboard', (req, res) => {
-  console.log(req.isAuthenticated())
-  console.log(req.user)
+router.get('/dashboard', checkAuthenticated, (req, res) => { //, checkAuthenticated
+  // console.log(`Dashboard: ${req.isAuthenticated()}`)
+  // console.log(req.user)
   res.render('dashboard');
+})
+
+router.post('/logout', (req, res) => {
+  req.logOut();
+  res.redirect('/');
+})
+
+router.get('/settings', checkAuthenticated, (req, res) => { //, checkAuthenticated
+  // console.log(`Settings: ${req.isAuthenticated()}`)
+  // console.log(req.user)
+  res.render('settings', {
+    user: req.user
+  });
 })
 
 module.exports = router;
